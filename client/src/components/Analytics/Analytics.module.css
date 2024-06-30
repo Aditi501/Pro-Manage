@@ -1,0 +1,28 @@
+.analytics{
+    width: 60rem;
+    display:flex;
+    gap:50px;
+}
+.firstList, .secondList{
+    width: 25rem;
+    background-color: #F9FCFF;
+    border-radius: 20px;
+    padding: 5px 5px;
+}
+.lines{
+    display:flex;
+    gap: 10px;
+    width: 80%;
+    margin-left: 32px;
+}
+.lines p{
+    width:200px;
+    text-align: left;
+}
+.lines p img{
+    width:10px;
+    height:10px;
+}
+.lines p:nth-child(even){
+    text-align: right;
+}

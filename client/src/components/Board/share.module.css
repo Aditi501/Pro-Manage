@@ -1,0 +1,45 @@
+.taskDetails{
+    width: 38vw;
+    position: absolute;
+    top:3rem;
+    left:26rem;
+}
+.priority {
+    display: flex;
+    justify-content: left;  
+    gap:4px; 
+    align-items: center;
+  }
+  .checkList{
+    height:80px;
+    overflow-y:scroll;
+  }
+  .checkList label{
+    min-width: 60%;
+    display: flex;
+  }
+  .checkList input[type="checkbox"] {
+    margin-right: 3px;
+    max-width:20%;
+  }
+  .date{
+    display: flex;
+    align-items: center;
+    gap:10px;
+  }
+  .shareDueDate{
+    background-color: #CF3636;
+    width: 100px;
+    height: 30px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+  }
+  @media screen and (max-width:400px) { 
+    .taskDetails {
+        width: 35vw;
+        position: absolute;
+        top: 3rem;
+        left: 8rem;
+    }
+  }

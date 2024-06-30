@@ -1,0 +1,155 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.containerForm{
+    position: fixed;
+    top:0;
+    left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+.right{
+    width: 60vw;
+    background: #17A2B8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #00bcd4;
+    position: relative;
+    height: 100vh;
+}
+.circle{
+    width: 250px;
+    height:250px;
+    border-radius: 50%;
+    background: #317F8B;
+    position:absolute;
+    top: 19%;
+    left: 34%;
+   
+}
+
+  .ArtImg {
+    width: 400px;
+    height: 400px;
+    z-index: 1;
+  }
+  .welcomeText {
+    position: absolute;
+    top: 73%;
+    text-align: center;
+    color: white;
+    z-index: 2;
+    font-family: Open Sans;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+    
+  }
+  .welcomeText h1{
+    font-weight: 300;
+  }
+  .welcomeText p{
+    width: 300px;
+    
+  }
+  .formContainer{
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  .formContainer h1{
+    font-family: Open Sans;
+    font-size: 25px;
+    text-align: center;
+    width: 380px;
+    margin-left:-120px;
+  }
+  .formContainer p{
+    font-family: Open Sans;
+    font-size: 15px;
+    font-weight: 300;
+    text-align: center;
+    color:#828282;
+    width: 380px;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    width: 35vw;
+    margin-right: 50px;
+  }
+  
+  .inputContainer {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .inputContainer .icon {
+    position: absolute;
+    top: 35%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none; 
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    left: 78%;
+    top: 35%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+  }
+
+  input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-indent: 30px;
+  }
+  
+  .invalid {
+    border-color: red;
+  }
+  
+  .login {
+    width: 85%;
+    padding: 10px;
+    background-color: #00bcd4;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .login:hover {
+    background-color: #0097a7;
+  }
+  .Register{
+    width: 85%;
+    padding: 10px;
+   color:#17A2B8;
+    border: 1.38px solid #17A2B8;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    background: white;
+  }

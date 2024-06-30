@@ -1,0 +1,42 @@
+.updateForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    width: 35vw;
+    margin-right: 50px;
+}
+.updateInputContainer{
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.updateInputContainer .icon {
+    position: absolute;
+    top: 35%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none; 
+  }
+  .eyeIcon {
+    position: absolute;
+    left: 78%;
+    top: 35%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+  }
+  .update{
+    width: 85%;
+    padding: 10px;
+    background-color: #00bcd4;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
