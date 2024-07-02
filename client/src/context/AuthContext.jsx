@@ -17,7 +17,8 @@ export const AuthProvider = ({ children }) => {
   const [filter, setFilter] = useState('all');
   const [status, setStatus] = useState('backlog');
   const [boardPeople,setBoardPeople]=useState([]);
-const navigate=useNavigate()
+  const [loading, setLoading] = useState(true);
+  const navigate=useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -30,15 +31,17 @@ const navigate=useNavigate()
       setName(storedName);
       setEmail(emailId);
     }
+    setLoading(false);
   }, []);
+
   useEffect(() => {
-    if (!authToken) {
-      
+    if (!loading && !authToken) {
       navigate('/login');
     }
- 
+  }, [authToken, loading]);
 
-  }, [authToken]);
+
+
   useEffect(() => {
     if (authToken && userId) {
       console.log("Fetching tasks with token:", authToken);
