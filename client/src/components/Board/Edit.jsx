@@ -399,7 +399,7 @@ const Edit = ({ isOpen, onClose, taskId }) => {
                   value={taskData.assignedTo}
                   onChange={handleInputChange}
                 >
-                  {boardPeople.map((member, index) => (
+                  {boardPeople && boardPeople.map((member, index) => (
                     <option key={index} value={member}>{member}</option>
                   ))}
                 </select>

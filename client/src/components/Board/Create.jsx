@@ -130,16 +130,9 @@ const Create = ({ isOpen, onClose }) => {
               <label className={styles.assignLabel}>
                 Assign to:
                 <select value={assignee} onChange={(e) => setAssignee(e.target.value)}>
-                  {boardPeople.map((member, index) => (
+                  {boardPeople && boardPeople.map((member, index) => (
                     <option key={index} value={member}
-                    style={{
-                      backgroundImage: `url(${getEmailIconText(member)})`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'left center',
-                      paddingLeft: '30px',
-                    }}
                     >
-                       {/* <span className={styles.tooltipIcon}> {getEmailIconText(member)} | </span> */}
                       {member}</option>
                   ))}
                 </select>

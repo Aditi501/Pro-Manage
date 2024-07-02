@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [status, setStatus] = useState('backlog');
   const [boardPeople,setBoardPeople]=useState([]);
   const [loading, setLoading] = useState(true);
+  const [memberEmail,setMemberEmail]=useState('')
   const navigate=useNavigate()
 
   useEffect(() => {
@@ -55,19 +56,6 @@ export const AuthProvider = ({ children }) => {
       fetchTasks();
     }
   }, [userId, authToken, filter]);
-
-  // useEffect(() => {
-  //   if (authToken && taskId) {
-  //     const fetchTasks = async () => {
-  //       try {
-  //         await updateTaskStatus(taskId, status);
-  //       } catch (error) {
-  //         console.log("Error changing status:", error);
-  //       }
-  //     };
-  //     fetchTasks();
-  //   }
-  // }, [taskId, authToken, status]);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -272,6 +260,7 @@ useEffect(()=>{
       );
       setFiltered((prev) => [...prev, response.data]); 
       console.log('Task created successfully:', response.data);
+      await getPeople();
       await filteredTasks(filter, email);
     } catch (error) {
       console.log('Error creating task:', error.response.data);
@@ -279,7 +268,7 @@ useEffect(()=>{
   }
   
 
-  const addPeople=async({email})=>{
+  const addPeople=async(email)=>{
     try{
       const response= await axios.post('https://pro-manage-9qcp.onrender.com/api/v1/auth/addMember',{email},
         { headers: { Authorization: authToken } }
@@ -291,7 +280,6 @@ useEffect(()=>{
       console.log(error)
     }
   }
-
   const getPeople=async()=>{
     try{
       const response= await axios.get('https://pro-manage-9qcp.onrender.com/api/v1/auth/getMember',

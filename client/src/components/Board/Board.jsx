@@ -46,7 +46,8 @@ const Board = () => {
 
   const handleAddMember = async () => {
     try {
-      const response = await addPeople({ email: memberEmail }); 
+      console.log('Attempting to add member with email:',memberEmail);
+      const response = await addPeople(memberEmail); 
       console.log('Member added successfully:', response);
       setShowSuccessModal(true);
     } catch (error) {
@@ -64,8 +65,8 @@ const Board = () => {
             <h2>Add people to the board</h2>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setMemberEmail(e.target.value)}
+              value={memberEmail}
+              onChange={(e) => {setMemberEmail(e.target.value); console.log(e.target.value)}}
               placeholder="Enter the email"
             />
             <button onClick={() => setIsModalOpen(false)} style={{background:"transparent",border:"1px solid #CF3636",color:"#CF3636"}}>Cancel</button>

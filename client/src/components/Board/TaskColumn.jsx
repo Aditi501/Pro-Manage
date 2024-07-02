@@ -98,7 +98,7 @@ const TaskColumn = ({ tasks, title }) => {
         </div>
         <Create isOpen={isModalOpen} onClose={handleCloseModal} />
         <div key={title} className={styles.column}>
-          {tasks.map(task => (
+          {tasks && tasks.map(task => (
             <div key={task._id} className={styles.taskCard}>
               <div className={styles.taskHeader}>
                 <div className={styles.priority}>
