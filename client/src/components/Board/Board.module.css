@@ -113,10 +113,12 @@ body {
     justify-content: left;  
     gap:2px; 
     align-items: center;
+    font-size: 10px;
+    font-family: poppins;
   }
   .priorityImg{
-    width:15px;
-    height:15px;
+    width:10px;
+    height:10px;
     border-radius: 50%;
     background-color: #707070;
     
@@ -129,6 +131,15 @@ body {
     display: flex;
     gap:2px;
   }
+
+.buttonBox button{
+  border:none;
+  background-color: #EEECEC;
+  color:#767575;
+  font-family: poppins;
+  border-radius: 10px;
+}
+
   .checklistContainer {
     margin-top: 10px;
   }
@@ -140,18 +151,28 @@ body {
   .checklistItem label{
     min-width: 60%;
     display: flex;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    align-items: center;
   }
+
   .checklistItem input[type="checkbox"] {
     margin-right: 3px;
     max-width:20%;
+    margin-top: 15px;;
+  }
+  .checklistHeader{
+    font-size: 15px;
   }
   .taskHeader{
     display: flex;
     width: 100%;
-    gap: 9rem;
+    gap: 8.3rem;
     align-items: center;
   }
-  
+ 
+
   .shareDueDate{
     background-color: #CF3636;
     width: 80px;
@@ -240,4 +261,47 @@ body {
 .taskTitleHeader button{
   background-color: transparent;
   border:none;
+  color: #767575;
+}
+
+.tooltipContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltipIcon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #FFEBEB;
+  text-align: center;
+  line-height: 24px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.tooltipContent {
+  visibility: hidden;
+  width: fit-content;
+  font-size: 10px;
+  background-color: #FFEBEB;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; 
+  left: 60%;
+  /* margin-left: -100px; */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltipContainer:hover .tooltipContent {
+  visibility: visible;
+  opacity: 1;
 }

@@ -4,6 +4,8 @@ import styles from './Create.module.css';
 import trash from '../../assets/Delete.png';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { getEmailIconText } from '../../utils/EmailIcon';
+
 
 const Create = ({ isOpen, onClose }) => {
   const { createTask, boardPeople } = useAuth();
@@ -129,7 +131,16 @@ const Create = ({ isOpen, onClose }) => {
                 Assign to:
                 <select value={assignee} onChange={(e) => setAssignee(e.target.value)}>
                   {boardPeople.map((member, index) => (
-                    <option key={index} value={member}>{member}</option>
+                    <option key={index} value={member}
+                    style={{
+                      backgroundImage: `url(${getEmailIconText(member)})`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'left center',
+                      paddingLeft: '30px',
+                    }}
+                    >
+                       {/* <span className={styles.tooltipIcon}> {getEmailIconText(member)} | </span> */}
+                      {member}</option>
                   ))}
                 </select>
               </label>

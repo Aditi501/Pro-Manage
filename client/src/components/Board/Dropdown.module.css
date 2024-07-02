@@ -6,9 +6,10 @@
   .menuButton {
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 30px;
     cursor: pointer;
     position: relative;
+    text-align: right;
   }
   
   .menu {

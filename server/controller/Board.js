@@ -3,7 +3,7 @@ const Board=require('../model/Board')
 
 const addMembers=async(req,res,next)=>{
     try {
-        const { email } = req.body;
+        const email  = req.email;
         const userId = req.userId;
     
         if (!email) {
@@ -36,7 +36,7 @@ const getMembers=async(req,res,next)=>{
   try {
       const userId = req.userId;
   
-      const people=await Board.find();
+      const people=await Board.find({createdBy:userId});
 
       return res.json({people});
   }

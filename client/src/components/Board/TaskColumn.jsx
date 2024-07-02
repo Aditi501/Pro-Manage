@@ -7,6 +7,7 @@ import circle3 from '../../assets/Ellipse 2 (2).png';
 import Dropdown from './Dropdown';
 import { format, isPast } from 'date-fns';
 import Create from './Create';
+import { getEmailIconText } from '../../utils/EmailIcon';
 
 const TaskColumn = ({ tasks, title }) => {
   const { updateTaskStatus } = useAuth();
@@ -81,6 +82,9 @@ const TaskColumn = ({ tasks, title }) => {
     });
     setCollapsed(newCollapsedState);
   };
+
+   
+
   return (
     <>
       <div key={title} className={styles.taskColumn}>
@@ -97,10 +101,7 @@ const TaskColumn = ({ tasks, title }) => {
           {tasks.map(task => (
             <div key={task._id} className={styles.taskCard}>
               <div className={styles.taskHeader}>
-                <h4>{task.title}</h4>
-                <Dropdown taskId={task._id} />
-              </div>
-              <div className={styles.priority}>
+                <div className={styles.priority}>
                 {task.priority === 'Low Priority' ? (
                   <img className={styles.priorityImg} src={circle1} alt="Low Priority" />
                 ) : task.priority === 'High Priority' ? (
@@ -112,7 +113,16 @@ const TaskColumn = ({ tasks, title }) => {
                 )}
                 <p>{task.priority}</p>
               </div>
-
+                <Dropdown taskId={task._id} />
+              </div>
+            <h4 className={styles.tooltipContainer} style={{fontWeight: 600,lineHeight:"25px",fontSize:"20px"}}>{task.title}
+          {(task.assignedTo) &&  (
+            <><div className={styles.tooltipIcon}>{getEmailIconText(task.assignedTo)}</div>
+        <div className={styles.tooltipContent}>
+          {task.assignedTo}
+        </div>
+        </>)}
+              </h4> 
               <div className={styles.checklistContainer}>
                 <p onClick={() => toggleCollapse(task._id)} className={styles.checklistHeader}>
                   Checklist ({getCheckedCount(task._id)}/{task.checklist.length})
@@ -202,8 +212,8 @@ const TaskColumn = ({ tasks, title }) => {
                       </button>
                     )}
                     <button onClick={() => handleStatusChange(task._id, 'backlog')}>Backlog</button>
-                    <button onClick={() => handleStatusChange(task._id, 'in-progress')}>In Progress</button>
-                    <button onClick={() => handleStatusChange(task._id, 'todo')}>To do</button>
+                    <button onClick={() => handleStatusChange(task._id, 'in-progress')}>Progress</button>
+                    <button onClick={() => handleStatusChange(task._id, 'todo')}>Todo</button>
                   </div>
                 )}
               </div>

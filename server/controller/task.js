@@ -98,12 +98,11 @@ const shareTask = async (req, res) => {
 const filterTasks = async (req, res) => {
   const { filter } = req.query;
   const userEmail = req.email;
-
   try {
     let tasks;
     const today = new Date();
     let startDate, endDate;
-
+    console.log("User Email:", userEmail); 
     switch (filter) {
       case 'today':
         startDate = new Date(today.setHours(0, 0, 0, 0));
@@ -121,7 +120,7 @@ const filterTasks = async (req, res) => {
         endDate = new Date(today.setDate(today.getDate() - today.getDay() + 6));
         tasks = await Task.find({
           $or: [
-            { createdBy: req.userId, assignedTo: userEmail },
+            { createdBy: req.userId, assignedTo: userEmail, createdAt: { $gte: startDate, $lt: endDate } },
             { createdBy: req.userId, createdAt: { $gte: startDate, $lt: endDate } },
             { assignedTo: userEmail, createdAt: { $gte: startDate, $lt: endDate } }
           ]
@@ -132,7 +131,7 @@ const filterTasks = async (req, res) => {
         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
         tasks = await Task.find({
           $or: [
-            { createdBy: req.userId, assignedTo: userEmail },
+            { createdBy: req.userId, assignedTo: userEmail, createdAt: { $gte: startDate, $lt: endDate }},
             { createdBy: req.userId, createdAt: { $gte: startDate, $lt: endDate } },
             { assignedTo: userEmail, createdAt: { $gte: startDate, $lt: endDate } }
           ]
@@ -141,7 +140,6 @@ const filterTasks = async (req, res) => {
       default:
         tasks = await Task.find({ $or: [{ createdBy: req.userId }, { assignedTo: userEmail }] });
     }
-
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
