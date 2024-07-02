@@ -54,7 +54,7 @@ function Login() {
     <div className={styles.containerForm}>
       <div className={styles.right}>
         <div className={styles.circle}></div>
-        <img src={art} alt="Art" />
+        <img src={art} alt="Art" style={{zIndex:1}} />
         <div className={styles.welcomeText}>
           <h1>Welcome aboard my friend</h1>
           <p>just a couple of clicks and we start</p>

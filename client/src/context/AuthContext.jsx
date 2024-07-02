@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios'
 const AuthContext = createContext();
 import { jwtDecode } from 'jwt-decode';
-
+import { useNavigate } from 'react-router-dom';
 
 export const AuthProvider = ({ children }) => {
 
@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [filter, setFilter] = useState('all');
   const [status, setStatus] = useState('backlog');
   const [boardPeople,setBoardPeople]=useState([]);
+const navigate=useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -30,7 +31,14 @@ export const AuthProvider = ({ children }) => {
       setEmail(emailId);
     }
   }, []);
+  useEffect(() => {
+    if (!authToken) {
+      
+      navigate('/login');
+    }
+ 
 
+  }, [authToken]);
   useEffect(() => {
     if (authToken && userId) {
       console.log("Fetching tasks with token:", authToken);
@@ -45,18 +53,18 @@ export const AuthProvider = ({ children }) => {
     }
   }, [userId, authToken, filter]);
 
-  useEffect(() => {
-    if (authToken && taskId) {
-      const fetchTasks = async () => {
-        try {
-          await updateTaskStatus(taskId, status);
-        } catch (error) {
-          console.log("Error changing status:", error);
-        }
-      };
-      fetchTasks();
-    }
-  }, [taskId, authToken, status]);
+  // useEffect(() => {
+  //   if (authToken && taskId) {
+  //     const fetchTasks = async () => {
+  //       try {
+  //         await updateTaskStatus(taskId, status);
+  //       } catch (error) {
+  //         console.log("Error changing status:", error);
+  //       }
+  //     };
+  //     fetchTasks();
+  //   }
+  // }, [taskId, authToken, status]);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -93,7 +101,7 @@ useEffect(()=>{
 
   const registerUser = async ({ name, email, password, confirmPassword }) => {
     try {
-      const response = await axios.post(`http://localhost:3000/api/v1/auth/register`, {
+      const response = await axios.post(`https://pro-manage-9qcp.onrender.com/api/v1/auth/register`, {
         name,
         email,
         password,
@@ -109,7 +117,7 @@ useEffect(()=>{
 
   const loginUser = async ({ email, password }) => {
     try {
-      const reqUrl = `http://localhost:3000/api/v1/auth/login`;
+      const reqUrl = `https://pro-manage-9qcp.onrender.com/api/v1/auth/login`;
       const response = await axios.post(reqUrl, { email, password });
 
       localStorage.setItem('token', response.data.token);
@@ -134,7 +142,7 @@ useEffect(()=>{
 
   const updateTaskStatus = async (taskId, newStatus) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/v1/task/status/${taskId}`, { status: newStatus }, {
+      const response = await axios.put(`https://pro-manage-9qcp.onrender.com/api/v1/task/status/${taskId}`, { status: newStatus }, {
         headers: { Authorization: authToken }
       });
       console.log('Task status updated:', response.data);
@@ -151,7 +159,7 @@ useEffect(()=>{
   const filteredTasks = async (filter, email) => {
     console.log("Filtered Tasks Function Called with:", filter, email);
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/task/filter',
+      const response = await axios.get('https://pro-manage-9qcp.onrender.com/api/v1/task/filter',
         { headers: { Authorization: authToken }, params: { filter } }, { email }
       )
       console.log('Filtered tasks response:', response.data);
@@ -165,7 +173,7 @@ useEffect(()=>{
 
   const fetchTaskCounts = async (email) => {
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/task/total',
+      const response = await axios.get('https://pro-manage-9qcp.onrender.com/api/v1/task/total',
         { headers: { Authorization: authToken } }, { email }
       );
       setTaskCounts(response.data);
@@ -183,7 +191,7 @@ useEffect(()=>{
     console.log("Payload to be sent:", payload);
 
     try {
-      const response = await axios.patch('http://localhost:3000/api/v1/auth/update', payload,
+      const response = await axios.patch('https://pro-manage-9qcp.onrender.com/api/v1/auth/update', payload,
         { headers: { Authorization: authToken } }
       )
       setUserData(response.data.user);
@@ -200,7 +208,7 @@ useEffect(()=>{
   }
   const deleteTask = async (taskId) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/v1/task/delete/${taskId}`,
+      const response = await axios.delete(`https://pro-manage-9qcp.onrender.com/api/v1/task/delete/${taskId}`,
         { headers: { Authorization: authToken } }
       )
       setFiltered((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
@@ -212,10 +220,9 @@ useEffect(()=>{
   }
   const shareTask = async (taskId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/task/get/${taskId}`)
+      const response = await axios.get(`https://pro-manage-9qcp.onrender.com/api/v1/task/get/${taskId}`)
       setTaskId(taskId);
       console.log(response.data);
-
 
       await filteredTasks(filter, email);
 
@@ -229,7 +236,7 @@ useEffect(()=>{
 
   const getTaskById = async (taskId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/v1/task/get/${taskId}`)
+      const response = await axios.get(`https://pro-manage-9qcp.onrender.com/api/v1/task/get/${taskId}`)
       setTaskId(taskId);
       console.log(response.data);
 
@@ -256,7 +263,7 @@ useEffect(()=>{
           checked: item.checked || false
         };
       });
-      const response = await axios.post(`http://localhost:3000/api/v1/task/create`, 
+      const response = await axios.post(`https://pro-manage-9qcp.onrender.com/api/v1/task/create`, 
         { ...data, checklist: formattedChecklist },
         { headers: { Authorization: authToken } }
       );
@@ -271,7 +278,7 @@ useEffect(()=>{
 
   const addPeople=async({email})=>{
     try{
-      const response= await axios.post('http://localhost:3000/api/v1/auth/addMember',{email},
+      const response= await axios.post('https://pro-manage-9qcp.onrender.com/api/v1/auth/addMember',{email},
         { headers: { Authorization: authToken } }
       )
       console.log(response.data);
@@ -284,7 +291,7 @@ useEffect(()=>{
 
   const getPeople=async()=>{
     try{
-      const response= await axios.get('http://localhost:3000/api/v1/auth/getMember',
+      const response= await axios.get('https://pro-manage-9qcp.onrender.com/api/v1/auth/getMember',
         { headers: { Authorization: authToken } }
       )
       const members = response.data.people[0]?.members;
@@ -308,7 +315,7 @@ useEffect(()=>{
           checked: item.checked || false
         };
       });
-      const response = await axios.put(`http://localhost:3000/api/v1/task/update/${taskId}`, 
+      const response = await axios.put(`https://pro-manage-9qcp.onrender.com/api/v1/task/update/${taskId}`, 
         { ...data, checklist: formattedChecklist },
         { headers: { Authorization: authToken } }
       );

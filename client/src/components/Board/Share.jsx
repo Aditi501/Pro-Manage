@@ -5,7 +5,8 @@ import circle1 from '../../assets/Ellipse 2.png';
 import circle2 from '../../assets/Ellipse 2 (1).png';
 import circle3 from '../../assets/Ellipse 2 (2).png';
 import { format } from 'date-fns';
-
+import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/codesandbox.png';
 
 const Share = () => {
   const { shareTask} = useAuth();
@@ -13,6 +14,7 @@ const Share = () => {
   const [task, setTask] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const naviagte=useNavigate()
 
   useEffect(() => {
     const fetchTaskDetails = async () => {
@@ -32,6 +34,8 @@ const Share = () => {
 
   const formattedDueDate = task.dueDate ? format(new Date(task.dueDate), 'dd MMMM') : ' ';
   return (
+    <>
+     <h4 className={styles.logo} onClick={()=>naviagte('/')}><img src={logo}/><span>Pro Manage</span></h4>
     <div className={styles.taskDetails}>
       <div className={styles.priority}>
               {task.priority === 'Low Priority' ? <img className= {styles.priorityImg} src={circle1} alt="Low Priority" /> : task.priority === 'High Priority' ? <img className= {styles.priorityImg} src={circle2} alt="High Priority" /> : task.priority === 'Medium Priority' && <img className= {styles.priorityImg} src={circle3} alt="Medium Priority" />}
@@ -52,6 +56,7 @@ const Share = () => {
       {(task.dueDate)&& (<><h5>Due Date</h5><button className={styles.shareDueDate}>{formattedDueDate}</button></>)}
     </div>
     </div>
+    </>
   );
 };
 

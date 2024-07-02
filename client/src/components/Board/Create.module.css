@@ -110,17 +110,6 @@
     border:none;
     text-align: left;
   }
-  .assignLabel option::before {
-    content: attr(data-icon); /* Use data attribute to set content */
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #ddd;
-    color: #555;
-    text-align: center;
-    margin-right: 8px;
-  }
   
   .assignLabel select{
     width: 75%;
