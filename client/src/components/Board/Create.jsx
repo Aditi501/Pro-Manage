@@ -130,6 +130,7 @@ const Create = ({ isOpen, onClose }) => {
               <label className={styles.assignLabel}>
                 Assign to:
                 <select value={assignee} onChange={(e) => setAssignee(e.target.value)}>
+                  <option>select assignee</option>
                   {boardPeople && boardPeople.map((member, index) => (
                     <option key={index} value={member}
                     >

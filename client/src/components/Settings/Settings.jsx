@@ -152,6 +152,7 @@ const Settings = () => {
       if (response) {
         console.log('Update successful');
         alert("You have to log in again");
+        localStorage.clear();
         navigate('/login');
       }
       else{

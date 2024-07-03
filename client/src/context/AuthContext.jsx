@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     const fetchTask = async () => {
       try {
         if (userId) {
-          await fetchTaskCounts(userId);
+          await fetchTaskCounts(email);
         }
       }
       catch (error) {
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
     }
     fetchTask();
-  }, [userId, authToken]);
+  }, [email, authToken]);
 
 useEffect(()=>{
   const fetchMembers = async () => {
@@ -92,7 +92,7 @@ useEffect(()=>{
 
   const registerUser = async ({ name, email, password, confirmPassword }) => {
     try {
-      const response = await axios.post(`https://pro-manage-9qcp.onrender.com/api/v1/auth/register`, {
+      const response = await axios.post(`https://pro-manage-1-2vrp.onrender.com/api/v1/auth/register`, {
         name,
         email,
         password,
@@ -108,7 +108,7 @@ useEffect(()=>{
 
   const loginUser = async ({ email, password }) => {
     try {
-      const reqUrl = `https://pro-manage-9qcp.onrender.com/api/v1/auth/login`;
+      const reqUrl = `https://pro-manage-1-2vrp.onrender.com/api/v1/auth/login`;
       const response = await axios.post(reqUrl, { email, password });
 
       localStorage.setItem('token', response.data.token);
@@ -133,7 +133,7 @@ useEffect(()=>{
 
   const updateTaskStatus = async (taskId, newStatus) => {
     try {
-      const response = await axios.put(`https://pro-manage-9qcp.onrender.com/api/v1/task/status/${taskId}`, { status: newStatus }, {
+      const response = await axios.put(`https://pro-manage-1-2vrp.onrender.com/api/v1/task/status/${taskId}`, { status: newStatus }, {
         headers: { Authorization: authToken }
       });
       console.log('Task status updated:', response.data);
@@ -150,7 +150,7 @@ useEffect(()=>{
   const filteredTasks = async (filter, email) => {
     console.log("Filtered Tasks Function Called with:", filter, email);
     try {
-      const response = await axios.get('https://pro-manage-9qcp.onrender.com/api/v1/task/filter',
+      const response = await axios.get('https://pro-manage-1-2vrp.onrender.com/api/v1/task/filter',
         { headers: { Authorization: authToken }, params: { filter } }, { email }
       )
       console.log('Filtered tasks response:', response.data);
@@ -164,7 +164,7 @@ useEffect(()=>{
 
   const fetchTaskCounts = async (email) => {
     try {
-      const response = await axios.get('https://pro-manage-9qcp.onrender.com/api/v1/task/total',
+      const response = await axios.get('https://pro-manage-1-2vrp.onrender.com/api/v1/task/total',
         { headers: { Authorization: authToken } }, { email }
       );
       setTaskCounts(response.data);
@@ -182,7 +182,7 @@ useEffect(()=>{
     console.log("Payload to be sent:", payload);
 
     try {
-      const response = await axios.patch('https://pro-manage-9qcp.onrender.com/api/v1/auth/update', payload,
+      const response = await axios.patch('https://pro-manage-1-2vrp.onrender.com/api/v1/auth/update', payload,
         { headers: { Authorization: authToken } }
       )
       setUserData(response.data.user);
@@ -199,10 +199,11 @@ useEffect(()=>{
   }
   const deleteTask = async (taskId) => {
     try {
-      const response = await axios.delete(`https://pro-manage-9qcp.onrender.com/api/v1/task/delete/${taskId}`,
+      const response = await axios.delete(`https://pro-manage-1-2vrp.onrender.com/api/v1/task/delete/${taskId}`,
         { headers: { Authorization: authToken } }
       )
       setFiltered((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
+      await fetchTaskCounts(email)
       return response.data;
     }
     catch (error) {
@@ -211,7 +212,7 @@ useEffect(()=>{
   }
   const shareTask = async (taskId) => {
     try {
-      const response = await axios.get(`https://pro-manage-9qcp.onrender.com/api/v1/task/get/${taskId}`)
+      const response = await axios.get(`https://pro-manage-1-2vrp.onrender.com/api/v1/task/get/${taskId}`)
       setTaskId(taskId);
       console.log(response.data);
 
@@ -227,7 +228,7 @@ useEffect(()=>{
 
   const getTaskById = async (taskId) => {
     try {
-      const response = await axios.get(`https://pro-manage-9qcp.onrender.com/api/v1/task/get/${taskId}`)
+      const response = await axios.get(`https://pro-manage-1-2vrp.onrender.com/api/v1/task/get/${taskId}`)
       setTaskId(taskId);
       console.log(response.data);
 
@@ -244,7 +245,7 @@ useEffect(()=>{
 
   const createTask = async (data) => {
     try {
-
+      await getPeople();
       const formattedChecklist = data.checklist.map(item => {
         if (!item.text) {
           throw new Error('Checklist item must have a text field');
@@ -254,14 +255,14 @@ useEffect(()=>{
           checked: item.checked || false
         };
       });
-      const response = await axios.post(`https://pro-manage-9qcp.onrender.com/api/v1/task/create`, 
+      const response = await axios.post(`https://pro-manage-1-2vrp.onrender.com/api/v1/task/create`, 
         { ...data, checklist: formattedChecklist },
         { headers: { Authorization: authToken } }
       );
       setFiltered((prev) => [...prev, response.data]); 
       console.log('Task created successfully:', response.data);
-      await getPeople();
       await filteredTasks(filter, email);
+      await fetchTaskCounts(email);
     } catch (error) {
       console.log('Error creating task:', error.response.data);
     }
@@ -270,10 +271,11 @@ useEffect(()=>{
 
   const addPeople=async(email)=>{
     try{
-      const response= await axios.post('https://pro-manage-9qcp.onrender.com/api/v1/auth/addMember',{email},
+      const response= await axios.post('https://pro-manage-1-2vrp.onrender.com/api/v1/auth/addMember',{email},
         { headers: { Authorization: authToken } }
       )
       console.log(response.data);
+      await getPeople();
       return response.data;
     }
     catch(error){
@@ -282,7 +284,7 @@ useEffect(()=>{
   }
   const getPeople=async()=>{
     try{
-      const response= await axios.get('https://pro-manage-9qcp.onrender.com/api/v1/auth/getMember',
+      const response= await axios.get('https://pro-manage-1-2vrp.onrender.com/api/v1/auth/getMember',
         { headers: { Authorization: authToken } }
       )
       const members = response.data.people[0]?.members;
@@ -306,13 +308,14 @@ useEffect(()=>{
           checked: item.checked || false
         };
       });
-      const response = await axios.put(`https://pro-manage-9qcp.onrender.com/api/v1/task/update/${taskId}`, 
+      const response = await axios.put(`https://pro-manage-1-2vrp.onrender.com/api/v1/task/update/${taskId}`, 
         { ...data, checklist: formattedChecklist },
         { headers: { Authorization: authToken } }
       );
       setFiltered((prev) => prev.map(task => task._id === taskId ? response.data : task));
       console.log('Task updated successfully:', response.data);
       await filteredTasks(filter, email);
+      await fetchTaskCounts(email);
     } catch (error) {
       console.log('Error creating task:', error.response.data);
     }
