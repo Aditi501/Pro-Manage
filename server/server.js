@@ -7,13 +7,26 @@ const authRoute=require('./routes/auth');
 const taskRoute=require('./routes/task')
 const port= process.env.PORT
 
+const allowedOrigins = [
+  'https://680105625444ecf2cb066b19--kaleidoscopic-scone-67cc88.netlify.app',
+  'http://localhost:3000'
+];
 
 const corsOptions = {
-  origin:"*",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed from this origin'));
+    }
+  },
+  credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Authorization','content-type','params',], }
+  allowedHeaders: ['Authorization', 'Content-Type'],
+};
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Preflight
 
 
 app.use(express.json())
